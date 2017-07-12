@@ -1,0 +1,18 @@
+package com.doit.wheels.services;
+
+import com.doit.wheels.dao.entities.basic.AbstractModel;
+
+import java.util.List;
+
+public interface GenericService<T extends AbstractModel> {
+
+    T getById(Long id);
+
+    T save(T t);
+
+    T update(T t);
+
+    void delete(T t);
+
+    List<T> findAll();
+}
