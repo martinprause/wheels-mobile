@@ -52,9 +52,9 @@ public class OrderController extends AbstractController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseBody
-    public ResponseEntity<Order> removeOrderWithAccesses(@RequestBody Long idOrder) throws NoPermissionsException {
+    public ResponseEntity<Order> removeOrderWithAccesses(@RequestBody Long orderId) throws NoPermissionsException {
 
-        Order order = orderService.getById(idOrder);
+        Order order = orderService.getById(orderId);
         orderService.delete(order);
 
         return new ResponseEntity<>(order, HttpStatus.OK);
