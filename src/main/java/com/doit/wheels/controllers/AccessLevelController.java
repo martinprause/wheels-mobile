@@ -1,9 +1,8 @@
 package com.doit.wheels.controllers;
 
 import com.doit.wheels.dao.entities.AccessLevel;
-import com.doit.wheels.dao.entities.User;
 import com.doit.wheels.services.AccessLevelService;
-import com.doit.wheels.utils.AccessLevelType;
+import com.doit.wheels.utils.enums.AccessLevelTypeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +20,7 @@ public class AccessLevelController extends AbstractController {
     @RequestMapping(value = "/{accessLevelType}", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<AccessLevel> getAccessLevel(@PathVariable String accessLevelType) throws NoSuchElementException {
-        AccessLevel accessLevel = accessLevelService.findAccessLevelByAccessLevel(AccessLevelType.valueOf(accessLevelType));
+        AccessLevel accessLevel = accessLevelService.findAccessLevelByAccessLevel(AccessLevelTypeEnum.valueOf(accessLevelType));
 
         return new ResponseEntity<>(accessLevel, HttpStatus.OK);
     }

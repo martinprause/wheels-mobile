@@ -20,11 +20,6 @@ public class GenericServiceImpl<T extends AbstractModel> implements GenericServi
     }
 
     @Override
-    public T getById(Long id) {
-        return genericRepository.findOne(id);
-    }
-
-    @Override
     @Transactional
     public T save(T t) {
         return genericRepository.save(t);
@@ -38,6 +33,11 @@ public class GenericServiceImpl<T extends AbstractModel> implements GenericServi
     @Override
     public void delete(T t) {
         genericRepository.delete(t);
+    }
+
+    @Override
+    public T findById(Long id) {
+        return genericRepository.findOne(id);
     }
 
     @Override

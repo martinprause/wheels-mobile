@@ -1,12 +1,15 @@
 package com.doit.wheels.dao.entities;
 
 import com.doit.wheels.dao.entities.basic.AbstractModel;
-import com.doit.wheels.utils.StatusTypeEnum;
+import com.doit.wheels.utils.enums.StatusTypeEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "orders")
@@ -19,15 +22,18 @@ public class Order extends AbstractModel {
     private Date lastUpdated;
 
     @ManyToOne
+    @JsonIgnore
     private User createdByUser;
 
     @ManyToOne
+    @JsonIgnore
     private User lastUpdatedByUser;
 
     @Enumerated(EnumType.STRING)
-    private StatusTypeEnum status;
+    private StatusTypeEnum status = StatusTypeEnum.IN_CREATION;
 
     @ManyToOne
+    @JsonManagedReference
     private Customer customer;
 
     private String customerNumberOrder;
@@ -36,9 +42,11 @@ public class Order extends AbstractModel {
 
     private Date deadlineDelivery;
 
+    @Column(length = 1000)
     private String comment;
 
     @ManyToOne
+    @JsonManagedReference
     private User driver;
 
     @Lob
@@ -47,8 +55,23 @@ public class Order extends AbstractModel {
     @Lob
     private byte[] signaturePicture;
 
-    @OneToMany(mappedBy = "orderVal")
-    private List<WheelRimPosition> wheelRimPositions;
+    private String qrCode;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(name = "orders_wheel_rim_positions",joinColumns = { @JoinColumn(name = "order_id") }, inverseJoinColumns = { @JoinColumn(name = "wheel_rim_position_id") })
+    @JsonManagedReference
+    private Set<WheelRimPosition> wheelRimPositions;
+
+    @ManyToMany(cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @JoinTable(name = "orders_guidelines",
+            joinColumns = {@JoinColumn(name = "order_id")},
+            inverseJoinColumns = {@JoinColumn(name = "guideline_id")})
+    @JsonIgnore
+    private Set<Guideline> guidelines = new HashSet<>();
+
+    @OneToMany(mappedBy = "order")
+    @JsonIgnore
+    private List<PrintJob> printJobs;
 
     public String getOrderNo() {
         return orderNo;
@@ -154,12 +177,43 @@ public class Order extends AbstractModel {
         this.lastUpdatedByUser = lastUpdatedByUser;
     }
 
-    @JsonIgnore
-    public List<WheelRimPosition> getWheelRimPositions() {
+    public StatusTypeEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusTypeEnum status) {
+        this.status = status;
+    }
+
+    public Set<WheelRimPosition> getWheelRimPositions() {
         return wheelRimPositions;
     }
 
-    public void setWheelRimPositions(List<WheelRimPosition> wheelRimPositions) {
+    public void setWheelRimPositions(Set<WheelRimPosition> wheelRimPositions) {
         this.wheelRimPositions = wheelRimPositions;
+    }
+
+    public Set<Guideline> getGuidelines() {
+        return guidelines;
+    }
+
+    public void setGuidelines(Set<Guideline> guidelines) {
+        this.guidelines = guidelines;
+    }
+
+    public List<PrintJob> getPrintJobs() {
+        return printJobs;
+    }
+
+    public void setPrintJobs(List<PrintJob> printJobs) {
+        this.printJobs = printJobs;
+    }
+
+    public String getQrCode() {
+        return qrCode;
+    }
+
+    public void setQrCode(String qrCode) {
+        this.qrCode = qrCode;
     }
 }

@@ -21,7 +21,7 @@ public class CountryController extends AbstractController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<Country> getUser(@PathVariable Long id) throws NoSuchElementException {
-        Country country = countryService.getById(id);
+        Country country = countryService.findById(id);
 
         return new ResponseEntity<>(country, HttpStatus.OK);
     }
@@ -54,7 +54,7 @@ public class CountryController extends AbstractController {
     @ResponseBody
     public ResponseEntity<Country> removeCountryWithAccesses(@RequestBody Long idCountry) throws NoPermissionsException {
 
-        Country country = countryService.getById(idCountry);
+        Country country = countryService.findById(idCountry);
         countryService.delete(country);
 
         return new ResponseEntity<>(country, HttpStatus.OK);

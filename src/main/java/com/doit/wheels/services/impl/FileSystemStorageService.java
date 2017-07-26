@@ -21,7 +21,7 @@ public class FileSystemStorageService implements StorageService {
             System.out.println("Failed to store empty file ");
         }
 
-        Order order = orderService.getById(orderId);
+        Order order = orderService.findById(orderId);
         order.setWheelsRimPicture(file.getBytes());
         orderService.update(order);
 

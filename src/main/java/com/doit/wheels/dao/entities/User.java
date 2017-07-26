@@ -1,10 +1,9 @@
 package com.doit.wheels.dao.entities;
 
 import com.doit.wheels.dao.entities.basic.Contact;
-import com.doit.wheels.utils.UserRoleEnum;
+import com.doit.wheels.utils.enums.UserRoleEnum;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import javax.persistence.*;
 import java.util.List;
@@ -16,7 +15,6 @@ public class User extends Contact {
 
     private String username;
 
-    @JsonProperty(access = Access.WRITE_ONLY)
     private String password;
 
     @Enumerated(EnumType.STRING)
@@ -27,17 +25,24 @@ public class User extends Contact {
     private String comment;
 
     @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnore
     private Set<AccessLevel> accesses;
 
     @OneToMany(mappedBy = "createdByUser")
+    @JsonIgnore
     private List<Order> createdOrders;
 
     @OneToMany(mappedBy = "lastUpdatedByUser")
+    @JsonIgnore
     private List<Order> lastUpdatedOrders;
 
     @OneToMany(mappedBy = "driver")
+    @JsonBackReference
     private List<Order> driverOrders;
 
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<PrintJob> printJobs;
 
     public User() {
 
@@ -88,7 +93,6 @@ public class User extends Contact {
         this.comment = comment;
     }
 
-    @JsonIgnore
     public Set<AccessLevel> getAccesses() {
         return accesses;
     }
@@ -115,12 +119,11 @@ public class User extends Contact {
 
     @Override
     public int hashCode() {
-        int result = this.getId().intValue();
+        long result = this.getId();
         result = 31 * result + getUsername().hashCode();
-        return result;
+        return (int) result;
     }
 
-    @JsonIgnore
     public List<Order> getCreatedOrders() {
         return createdOrders;
     }
@@ -129,7 +132,6 @@ public class User extends Contact {
         this.createdOrders = createdOrders;
     }
 
-    @JsonIgnore
     public List<Order> getLastUpdatedOrders() {
         return lastUpdatedOrders;
     }
@@ -138,7 +140,6 @@ public class User extends Contact {
         this.lastUpdatedOrders = lastUpdatedOrders;
     }
 
-    @JsonIgnore
     public List<Order> getDriverOrders() {
         return driverOrders;
     }
@@ -146,4 +147,17 @@ public class User extends Contact {
     public void setDriverOrders(List<Order> driverOrders) {
         this.driverOrders = driverOrders;
     }
+
+    public List<PrintJob> getPrintJobs() {
+        return printJobs;
+    }
+
+    public void setPrintJobs(List<PrintJob> printJobs) {
+        this.printJobs = printJobs;
+    }
+
+    public String getDriverFullName(){
+        return this.getFirstname() + " " + this.getLastname() + " (" + this.getUsername() + ")";
+    }
+
 }

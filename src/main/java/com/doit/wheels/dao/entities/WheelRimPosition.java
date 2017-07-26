@@ -1,7 +1,8 @@
 package com.doit.wheels.dao.entities;
 
 import com.doit.wheels.dao.entities.basic.AbstractModel;
-import com.doit.wheels.utils.StatusTypeEnum;
+import com.doit.wheels.utils.enums.StatusTypeEnum;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -14,20 +15,25 @@ public class WheelRimPosition extends AbstractModel {
     private String positionNo;
 
     @ManyToOne
+    @JsonManagedReference
     private Manufacturer manufacturerWheel;
 
     @ManyToOne
+    @JsonManagedReference
     private Model model;
 
     @ManyToOne
+    @JsonManagedReference
     private ModelType modelType;
     private Integer size;
-    private Integer hubCover;
+    private Boolean hubCover;
 
     @ManyToOne
+    @JsonManagedReference
     private ValveType valveType;
 
     @ManyToOne
+    @JsonManagedReference
     private Manufacturer manufacturerRim;
 
     @Enumerated(EnumType.STRING)
@@ -38,11 +44,9 @@ public class WheelRimPosition extends AbstractModel {
     private Integer indexVal;
     private String speed;
 
-    @ManyToOne
-    private Order orderVal;
+    private String qrCode;
 
-    public WheelRimPosition() {
-    }
+    public WheelRimPosition() {}
 
     public String getPositionNo() {
         return positionNo;
@@ -84,11 +88,11 @@ public class WheelRimPosition extends AbstractModel {
         this.size = size;
     }
 
-    public Integer getHubCover() {
+    public Boolean getHubCover() {
         return hubCover;
     }
 
-    public void setHubCover(Integer hubCover) {
+    public void setHubCover(Boolean hubCover) {
         this.hubCover = hubCover;
     }
 
@@ -154,5 +158,13 @@ public class WheelRimPosition extends AbstractModel {
 
     public void setSpeed(String speed) {
         this.speed = speed;
+    }
+
+    public String getQrCode() {
+        return qrCode;
+    }
+
+    public void setQrCode(String qrCode) {
+        this.qrCode = qrCode;
     }
 }

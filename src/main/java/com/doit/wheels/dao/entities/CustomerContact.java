@@ -1,6 +1,7 @@
 package com.doit.wheels.dao.entities;
 
 import com.doit.wheels.dao.entities.basic.Contact;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -15,6 +16,7 @@ public class CustomerContact extends Contact {
     private String mobile;
 
     @ManyToOne
+    @JsonBackReference
     private Customer customer;
 
     public Customer getCustomer() {

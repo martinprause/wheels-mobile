@@ -21,7 +21,7 @@ public class CustomerContactController extends AbstractController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<CustomerContact> getUser(@PathVariable Long id) throws NoSuchElementException {
-        CustomerContact customerContact = customerContactService.getById(id);
+        CustomerContact customerContact = customerContactService.findById(id);
 
         return new ResponseEntity<>(customerContact, HttpStatus.OK);
     }
@@ -54,7 +54,7 @@ public class CustomerContactController extends AbstractController {
     @ResponseBody
     public ResponseEntity<CustomerContact> removeCustomerContactWithAccesses(@RequestBody Long idCustomerContact) throws NoPermissionsException {
 
-        CustomerContact customerContact = customerContactService.getById(idCustomerContact);
+        CustomerContact customerContact = customerContactService.findById(idCustomerContact);
         customerContactService.delete(customerContact);
 
         return new ResponseEntity<>(customerContact, HttpStatus.OK);

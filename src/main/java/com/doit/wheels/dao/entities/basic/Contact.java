@@ -1,8 +1,12 @@
 package com.doit.wheels.dao.entities.basic;
 
 import com.doit.wheels.dao.entities.Country;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.ManyToOne;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -18,6 +22,7 @@ public abstract class Contact extends AbstractModel {
     private String city;
 
     @ManyToOne
+    @JsonManagedReference
     private Country country;
 
     private String email;

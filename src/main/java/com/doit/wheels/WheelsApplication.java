@@ -3,7 +3,7 @@ package com.doit.wheels;
 import com.doit.wheels.auth.SecurityConfiguration;
 import com.doit.wheels.dao.entities.User;
 import com.doit.wheels.dao.repositories.UserRepository;
-import com.doit.wheels.utils.UserRoleEnum;
+import com.doit.wheels.utils.enums.UserRoleEnum;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

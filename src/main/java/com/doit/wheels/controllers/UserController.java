@@ -2,6 +2,7 @@ package com.doit.wheels.controllers;
 
 import com.doit.wheels.dao.entities.User;
 import com.doit.wheels.services.UserService;
+import com.doit.wheels.utils.enums.UserRoleEnum;
 import com.doit.wheels.utils.exceptions.NoPermissionsException;
 import com.doit.wheels.utils.exceptions.UserException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +17,17 @@ import java.util.NoSuchElementException;
 @RequestMapping(value = "/user")
 public class UserController extends AbstractController {
 
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<User> getUser(@PathVariable Long id) throws NoSuchElementException {
-        User user = userService.getUser(id);
+        User user = userService.findById(id);
 
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
@@ -63,10 +68,17 @@ public class UserController extends AbstractController {
     @ResponseBody
     public ResponseEntity<User> removeUserWithAccesses(@RequestBody Long idUser) throws NoPermissionsException {
 
-        User user = userService.getById(idUser);
+        User user = userService.findById(idUser);
         userService.removeUserWithAccesses(user);
 
         return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/drivers", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<List<User>> getAllDrivers() {
+        List<User> users = userService.findAllByRole(UserRoleEnum.DRIVER);
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
 }

@@ -1,7 +1,7 @@
 package com.doit.wheels.dao.entities;
 
 import com.doit.wheels.dao.entities.basic.Description;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
@@ -15,13 +15,14 @@ public class Manufacturer extends Description {
 
     @OneToMany(mappedBy = "manufacturerWheel", fetch = FetchType.LAZY)
     @Cascade(CascadeType.ALL)
+    @JsonBackReference
     private List<WheelRimPosition> wheelRimPositionsByWheel;
 
     @OneToMany(mappedBy = "manufacturerRim", fetch = FetchType.LAZY)
     @Cascade(CascadeType.ALL)
+    @JsonBackReference
     private List<WheelRimPosition> wheelRimPositionsByRim;
 
-    @JsonIgnore
     public List<WheelRimPosition> getWheelRimPositionsByRim() {
         return wheelRimPositionsByRim;
     }
@@ -30,7 +31,6 @@ public class Manufacturer extends Description {
         this.wheelRimPositionsByRim = wheelRimPositionsByRim;
     }
 
-    @JsonIgnore
     public List<WheelRimPosition> getWheelRimPositionsByWheel() {
         return wheelRimPositionsByWheel;
     }

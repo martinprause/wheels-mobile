@@ -15,13 +15,17 @@ import java.util.NoSuchElementException;
 @RequestMapping(value = "/wheelRimPosition")
 public class WheelRimPositionController extends AbstractController {
 
+    private final WheelRimPositionService wheelRimPositionService;
+
     @Autowired
-    private WheelRimPositionService wheelRimPositionService;
+    public WheelRimPositionController(WheelRimPositionService wheelRimPositionService) {
+        this.wheelRimPositionService = wheelRimPositionService;
+    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<WheelRimPosition> getUser(@PathVariable Long id) throws NoSuchElementException {
-        WheelRimPosition wheelRimPosition = wheelRimPositionService.getById(id);
+        WheelRimPosition wheelRimPosition = wheelRimPositionService.findById(id);
 
         return new ResponseEntity<>(wheelRimPosition, HttpStatus.OK);
     }
@@ -54,7 +58,7 @@ public class WheelRimPositionController extends AbstractController {
     @ResponseBody
     public ResponseEntity<WheelRimPosition> removeWheelRimPositionWithAccesses(@RequestBody Long idWheelRimPosition) throws NoPermissionsException {
 
-        WheelRimPosition wheelRimPosition = wheelRimPositionService.getById(idWheelRimPosition);
+        WheelRimPosition wheelRimPosition = wheelRimPositionService.findById(idWheelRimPosition);
         wheelRimPositionService.delete(wheelRimPosition);
 
         return new ResponseEntity<>(wheelRimPosition, HttpStatus.OK);

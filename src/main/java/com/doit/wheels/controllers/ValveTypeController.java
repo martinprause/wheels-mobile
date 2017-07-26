@@ -21,7 +21,7 @@ public class ValveTypeController extends AbstractController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<ValveType> getUser(@PathVariable Long id) throws NoSuchElementException {
-        ValveType valveType = valveTypeService.getById(id);
+        ValveType valveType = valveTypeService.findById(id);
 
         return new ResponseEntity<>(valveType, HttpStatus.OK);
     }
@@ -54,7 +54,7 @@ public class ValveTypeController extends AbstractController {
     @ResponseBody
     public ResponseEntity<ValveType> removeValveTypeWithAccesses(@RequestBody Long idValveType) throws NoPermissionsException {
 
-        ValveType valveType = valveTypeService.getById(idValveType);
+        ValveType valveType = valveTypeService.findById(idValveType);
         valveTypeService.delete(valveType);
 
         return new ResponseEntity<>(valveType, HttpStatus.OK);

@@ -21,7 +21,7 @@ public class ModelTypeController extends AbstractController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<ModelType> getUser(@PathVariable Long id) throws NoSuchElementException {
-        ModelType modelType = modelTypeService.getById(id);
+        ModelType modelType = modelTypeService.findById(id);
 
         return new ResponseEntity<>(modelType, HttpStatus.OK);
     }
@@ -54,7 +54,7 @@ public class ModelTypeController extends AbstractController {
     @ResponseBody
     public ResponseEntity<ModelType> removeModelTypeWithAccesses(@RequestBody Long idModelType) throws NoPermissionsException {
 
-        ModelType modelType = modelTypeService.getById(idModelType);
+        ModelType modelType = modelTypeService.findById(idModelType);
         modelTypeService.delete(modelType);
 
         return new ResponseEntity<>(modelType, HttpStatus.OK);

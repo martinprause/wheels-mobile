@@ -21,7 +21,7 @@ public class GuidelineController extends AbstractController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<Guideline> getUser(@PathVariable Long id) throws NoSuchElementException {
-        Guideline guideline = guidelineService.getById(id);
+        Guideline guideline = guidelineService.findById(id);
 
         return new ResponseEntity<>(guideline, HttpStatus.OK);
     }
@@ -54,7 +54,7 @@ public class GuidelineController extends AbstractController {
     @ResponseBody
     public ResponseEntity<Guideline> removeGuidelineWithAccesses(@RequestBody Long idGuideline) throws NoPermissionsException {
 
-        Guideline guideline = guidelineService.getById(idGuideline);
+        Guideline guideline = guidelineService.findById(idGuideline);
         guidelineService.delete(guideline);
 
         return new ResponseEntity<>(guideline, HttpStatus.OK);

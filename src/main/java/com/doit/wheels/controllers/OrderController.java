@@ -15,13 +15,17 @@ import java.util.NoSuchElementException;
 @RequestMapping(value = "/order")
 public class OrderController extends AbstractController {
 
+    private final OrderService orderService;
+
     @Autowired
-    private OrderService orderService;
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
+    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<Order> getUser(@PathVariable Long id) throws NoSuchElementException {
-        Order order = orderService.getById(id);
+        Order order = orderService.findById(id);
 
         return new ResponseEntity<>(order, HttpStatus.OK);
     }
@@ -52,12 +56,20 @@ public class OrderController extends AbstractController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseBody
-    public ResponseEntity<Order> removeOrderWithAccesses(@RequestBody Long orderId) throws NoPermissionsException {
-
-        Order order = orderService.getById(orderId);
+    public ResponseEntity<Order> removeOrderWithAccesses(@PathVariable Long orderId) throws NoPermissionsException {
+        Order order = orderService.findById(orderId);
         orderService.delete(order);
 
         return new ResponseEntity<>(order, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/update-status/{id}/{status}", method = RequestMethod.PUT)
+    @ResponseBody
+    public ResponseEntity<Order> updateOrderStatus(@PathVariable Long id, @PathVariable String status) {
+        Order order = orderService.updateStatus(id, status);
+        if(order == null) {
+            throw new NoSuchElementException();
+        }
+        return new ResponseEntity<>(order, HttpStatus.OK);
+    }
 }

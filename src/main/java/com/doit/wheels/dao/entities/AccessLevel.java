@@ -1,8 +1,7 @@
 package com.doit.wheels.dao.entities;
 
 import com.doit.wheels.dao.entities.basic.AbstractModel;
-import com.doit.wheels.utils.AccessLevelType;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.doit.wheels.utils.enums.AccessLevelTypeEnum;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -11,7 +10,7 @@ import java.util.Set;
 public class AccessLevel extends AbstractModel {
 
     @Enumerated(value = EnumType.STRING)
-    private AccessLevelType accessLevel;
+    private AccessLevelTypeEnum accessLevel;
 
     @ManyToMany(cascade={CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinTable(name = "users_accesses",
@@ -22,15 +21,14 @@ public class AccessLevel extends AbstractModel {
     public AccessLevel() {
     }
 
-    public AccessLevelType getAccessLevel() {
+    public AccessLevelTypeEnum getAccessLevel() {
         return accessLevel;
     }
 
-    public void setAccessLevel(AccessLevelType accessLevel) {
+    public void setAccessLevel(AccessLevelTypeEnum accessLevel) {
         this.accessLevel = accessLevel;
     }
 
-    @JsonIgnore
     public Set<User> getUsers() {
         return users;
     }

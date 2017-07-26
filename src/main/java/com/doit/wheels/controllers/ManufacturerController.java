@@ -21,7 +21,7 @@ public class ManufacturerController extends AbstractController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<Manufacturer> getUser(@PathVariable Long id) throws NoSuchElementException {
-        Manufacturer manufacturer = manufacturerService.getById(id);
+        Manufacturer manufacturer = manufacturerService.findById(id);
 
         return new ResponseEntity<>(manufacturer, HttpStatus.OK);
     }
@@ -54,7 +54,7 @@ public class ManufacturerController extends AbstractController {
     @ResponseBody
     public ResponseEntity<Manufacturer> removeManufacturerWithAccesses(@RequestBody Long idManufacturer) throws NoPermissionsException {
 
-        Manufacturer manufacturer = manufacturerService.getById(idManufacturer);
+        Manufacturer manufacturer = manufacturerService.findById(idManufacturer);
         manufacturerService.delete(manufacturer);
 
         return new ResponseEntity<>(manufacturer, HttpStatus.OK);

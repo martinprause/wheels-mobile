@@ -1,8 +1,13 @@
 package com.doit.wheels.dao.repositories;
 
 import com.doit.wheels.dao.entities.User;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.doit.wheels.utils.enums.UserRoleEnum;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+import java.util.List;
+
+public interface UserRepository extends GenericRepository<User> {
+
     User findUserByUsername(String username);
+
+    List<User> findAllByRole(UserRoleEnum role);
 }

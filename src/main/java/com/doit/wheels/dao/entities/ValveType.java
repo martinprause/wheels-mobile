@@ -1,7 +1,7 @@
 package com.doit.wheels.dao.entities;
 
 import com.doit.wheels.dao.entities.basic.Description;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
@@ -14,9 +14,9 @@ public class ValveType extends Description {
 
     @OneToMany(mappedBy = "valveType")
     @Cascade(CascadeType.ALL)
+    @JsonBackReference
     private List<WheelRimPosition> wheelRimPositions;
 
-    @JsonIgnore
     public List<WheelRimPosition> getWheelRimPositions() {
         return wheelRimPositions;
     }
