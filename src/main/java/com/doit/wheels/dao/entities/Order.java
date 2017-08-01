@@ -2,6 +2,7 @@ package com.doit.wheels.dao.entities;
 
 import com.doit.wheels.dao.entities.basic.AbstractModel;
 import com.doit.wheels.utils.enums.StatusTypeEnum;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -17,8 +18,10 @@ public class Order extends AbstractModel {
 
     private String orderNo;
 
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy HH:mm:ss")
     private Date created;
 
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy HH:mm:ss")
     private Date lastUpdated;
 
     @ManyToOne
@@ -38,8 +41,10 @@ public class Order extends AbstractModel {
 
     private String customerNumberOrder;
 
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy HH:mm:ss")
     private Date deadlineFinish;
 
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy HH:mm:ss")
     private Date deadlineDelivery;
 
     @Column(length = 1000)
