@@ -15,8 +15,12 @@ import java.util.NoSuchElementException;
 @RequestMapping(value = "/order")
 public class OrderController extends AbstractController {
 
+    private final OrderService orderService;
+
     @Autowired
-    private OrderService orderService;
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
+    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
@@ -24,6 +28,13 @@ public class OrderController extends AbstractController {
         Order order = orderService.getById(id);
 
         return new ResponseEntity<>(order, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/orderNo/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Order> getOrderByOrderNo(@PathVariable String id){
+
+        return new ResponseEntity<>(orderService.findOrderByOrderNo(id), HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET)

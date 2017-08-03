@@ -154,6 +154,14 @@ public class Order extends AbstractModel {
         this.lastUpdatedByUser = lastUpdatedByUser;
     }
 
+    public StatusTypeEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusTypeEnum status) {
+        this.status = status;
+    }
+
     @JsonIgnore
     public List<WheelRimPosition> getWheelRimPositions() {
         return wheelRimPositions;
