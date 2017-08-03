@@ -4,7 +4,10 @@ import com.doit.wheels.dao.entities.Order;
 import com.doit.wheels.utils.enums.AccessLevelTypeEnum;
 import com.doit.wheels.utils.exceptions.NoPermissionsException;
 
-public interface OrderService extends GenericService<Order>{
+public interface OrderService  extends GenericService<Order> {
+
+    Order findOrderByOrderNo(String orderNo);
+
     void deleteOrder(Order order) throws NoPermissionsException;
 
     boolean checkIfCurrentUserHasPermissions(AccessLevelTypeEnum accessLevelTypeEnum);

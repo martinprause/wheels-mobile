@@ -3,6 +3,7 @@ package com.doit.wheels.services.impl;
 import com.doit.wheels.dao.entities.Order;
 import com.doit.wheels.dao.entities.User;
 import com.doit.wheels.dao.repositories.GenericRepository;
+import com.doit.wheels.dao.repositories.OrderRepository;
 import com.doit.wheels.services.OrderService;
 import com.doit.wheels.services.UserService;
 import com.doit.wheels.utils.enums.AccessLevelTypeEnum;
@@ -17,18 +18,20 @@ import java.util.Calendar;
 @Service
 public class OrderServiceImpl extends GenericServiceImpl<Order> implements OrderService {
 
+    private final OrderRepository orderRepository;
     private final UserService userService;
 
     @Autowired
-    public OrderServiceImpl(GenericRepository<Order> genericRepository, UserService userService) {
+    public OrderServiceImpl(GenericRepository<Order> genericRepository, OrderRepository orderRepository, UserService userService) {
         super(genericRepository);
+        this.orderRepository = orderRepository;
         this.userService = userService;
     }
 
     @Override
     public Order save(Order order) {
         User currentUser = userService.findUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-        if(order.getId() == null) {
+        if (order.getId() == null) {
             order.setStatus(StatusTypeEnum.CREATED);
             order.setCreatedByUser(currentUser);
             order.setCreated(Calendar.getInstance().getTime());
@@ -42,7 +45,7 @@ public class OrderServiceImpl extends GenericServiceImpl<Order> implements Order
     public void deleteOrder(Order order) throws NoPermissionsException {
         User currentUser = userService.findUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
         boolean isHasAccess = currentUser.getAccesses().stream().anyMatch(dto -> dto.getAccessLevel() == AccessLevelTypeEnum.DeleteOrder);
-        if(isHasAccess)
+        if (isHasAccess)
             super.delete(order);
         else
             throw new NoPermissionsException("Permission for user + " + currentUser.getUsername() + " denied!");
@@ -58,9 +61,14 @@ public class OrderServiceImpl extends GenericServiceImpl<Order> implements Order
     @Override
     public Order updateStatus(Long orderId, String status) {
         Order foundOrder = findById(orderId);
-        if(foundOrder != null) {
+        if (foundOrder != null) {
             foundOrder.setStatus(StatusTypeEnum.valueOf(status));
         }
         return update(foundOrder);
+    }
+
+    @Override
+    public Order findOrderByOrderNo(String orderNo) {
+        return orderRepository.findOrderByOrderNo(orderNo);
     }
 }

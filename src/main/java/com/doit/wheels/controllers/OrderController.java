@@ -30,6 +30,13 @@ public class OrderController extends AbstractController {
         return new ResponseEntity<>(order, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/orderNo/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Order> getOrderByOrderNo(@PathVariable String id){
+
+        return new ResponseEntity<>(orderService.findOrderByOrderNo(id), HttpStatus.OK);
+    }
+
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<List<Order>> getAllOrders() {
