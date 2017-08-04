@@ -13,4 +13,6 @@ public interface OrderService  extends GenericService<Order> {
     boolean checkIfCurrentUserHasPermissions(AccessLevelTypeEnum accessLevelTypeEnum);
 
     Order updateStatus(Long orderId, String status);
+
+    Order assignDriver(Long orderId, Long driverId);
 }

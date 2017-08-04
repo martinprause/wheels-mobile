@@ -68,6 +68,17 @@ public class OrderServiceImpl extends GenericServiceImpl<Order> implements Order
     }
 
     @Override
+    public Order assignDriver(Long orderId, Long driverId) {
+        Order foundOrder = findById(orderId);
+        User foundDriver = userService.findById(driverId);
+        if (foundOrder == null || foundDriver == null) {
+            return null;
+        }
+        foundOrder.setDriver(foundDriver);
+        return save(foundOrder);
+    }
+
+    @Override
     public Order findOrderByOrderNo(String orderNo) {
         return orderRepository.findOrderByOrderNo(orderNo);
     }

@@ -70,10 +70,20 @@ public class OrderController extends AbstractController {
         return new ResponseEntity<>(order, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/update-status/{id}/{status}", method = RequestMethod.PUT)
+    @PostMapping(value = "/update-status/{id}", params = {"status"})
     @ResponseBody
-    public ResponseEntity<Order> updateOrderStatus(@PathVariable Long id, @PathVariable String status) {
+    public ResponseEntity<Order> updateOrderStatus(@PathVariable Long id, @RequestParam("status") String status) {
         Order order = orderService.updateStatus(id, status);
+        if(order == null) {
+            throw new NoSuchElementException();
+        }
+        return new ResponseEntity<>(order, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/assign-driver/{id}", params = {"driverId"})
+    @ResponseBody
+    public ResponseEntity<Order> assignDriver(@PathVariable Long id, @RequestParam("driverId") Long driverId) {
+        Order order = orderService.assignDriver(id, driverId);
         if(order == null) {
             throw new NoSuchElementException();
         }
