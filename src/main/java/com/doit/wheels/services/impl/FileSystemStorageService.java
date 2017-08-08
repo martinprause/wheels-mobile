@@ -14,8 +14,12 @@ import java.util.Map;
 @Service
 public class FileSystemStorageService implements StorageService {
 
+    private final OrderService orderService;
+
     @Autowired
-    private OrderService orderService;
+    public FileSystemStorageService(OrderService orderService) {
+        this.orderService = orderService;
+    }
 
     @Override
     public Order uploadSignature(Long id, MultipartFile file, String name) {

@@ -20,8 +20,12 @@ import java.util.Map;
 @RequestMapping("/file")
 public class UploadFileController extends AbstractController {
 
+    private final StorageService storageService;
+
     @Autowired
-    private StorageService storageService;
+    public UploadFileController(StorageService storageService) {
+        this.storageService = storageService;
+    }
 
     @RequestMapping(value = "/wheel-rim", params = {"orderId"}, method = RequestMethod.POST, headers = "content-type=multipart/*")
     @ResponseBody
