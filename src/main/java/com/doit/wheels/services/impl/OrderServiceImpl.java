@@ -1,6 +1,7 @@
 package com.doit.wheels.services.impl;
 
 import com.doit.wheels.dao.entities.Order;
+import com.doit.wheels.dao.entities.Signature;
 import com.doit.wheels.dao.entities.User;
 import com.doit.wheels.dao.repositories.GenericRepository;
 import com.doit.wheels.dao.repositories.OrderRepository;
@@ -76,6 +77,14 @@ public class OrderServiceImpl extends GenericServiceImpl<Order> implements Order
         }
         foundOrder.setDriver(foundDriver);
         return save(foundOrder);
+    }
+
+    @Override
+    public Order uploadSignature(Long id, Signature signature) {
+        Order order = orderRepository.getOne(id);
+        order.setSignaturePicture(signature.getImage());
+        order.setSignatureName(signature.getName());
+        return save(order);
     }
 
     @Override

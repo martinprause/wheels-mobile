@@ -1,6 +1,7 @@
 package com.doit.wheels.controllers;
 
 import com.doit.wheels.dao.entities.Order;
+import com.doit.wheels.dao.entities.Signature;
 import com.doit.wheels.services.OrderService;
 import com.doit.wheels.utils.exceptions.NoPermissionsException;
 import org.springframework.beans.factory.annotation.Autowired;
