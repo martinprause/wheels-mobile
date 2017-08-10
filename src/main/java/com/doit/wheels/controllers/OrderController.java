@@ -1,7 +1,6 @@
 package com.doit.wheels.controllers;
 
 import com.doit.wheels.dao.entities.Order;
-import com.doit.wheels.dao.entities.Signature;
 import com.doit.wheels.services.OrderService;
 import com.doit.wheels.utils.exceptions.NoPermissionsException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,16 +24,21 @@ public class OrderController extends AbstractController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<Order> getUser(@PathVariable Long id) throws NoSuchElementException {
+    public ResponseEntity<Order> getAllOrders(@PathVariable Long id) throws NoSuchElementException {
         Order order = orderService.findById(id);
-
         return new ResponseEntity<>(order, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/page/{pageNumber}")
+    @ResponseBody
+    public ResponseEntity<List<Order>> getOrderFromPage(@PathVariable Integer pageNumber) throws NoSuchElementException {
+        List<Order> orderList = orderService.fetchOrdersFromPage(pageNumber);
+        return new ResponseEntity<>(orderList, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/orderNo/{id}", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<Order> getOrderByOrderNo(@PathVariable String id){
-
         return new ResponseEntity<>(orderService.findOrderByOrderNo(id), HttpStatus.OK);
     }
 
@@ -42,7 +46,6 @@ public class OrderController extends AbstractController {
     @ResponseBody
     public ResponseEntity<List<Order>> getAllOrders() {
         List<Order> orders = orderService.findAll();
-
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 
@@ -50,7 +53,6 @@ public class OrderController extends AbstractController {
     @ResponseBody
     public ResponseEntity<Order> postOrder(@RequestBody Order order) {
         Order newOrder = orderService.save(order);
-
         return new ResponseEntity<>(newOrder, HttpStatus.OK);
     }
 
@@ -58,7 +60,6 @@ public class OrderController extends AbstractController {
     @ResponseBody
     public ResponseEntity<Order> putOrder(@RequestBody Order newOrder) {
         Order order = orderService.update(newOrder);
-
         return new ResponseEntity<>(order, HttpStatus.OK);
     }
 
@@ -67,7 +68,6 @@ public class OrderController extends AbstractController {
     public ResponseEntity<Order> removeOrderWithAccesses(@PathVariable Long orderId) throws NoPermissionsException {
         Order order = orderService.findById(orderId);
         orderService.delete(order);
-
         return new ResponseEntity<>(order, HttpStatus.OK);
     }
 
