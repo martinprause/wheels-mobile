@@ -64,4 +64,11 @@ public class WheelRimPositionController extends AbstractController {
         return new ResponseEntity<>(wheelRimPosition, HttpStatus.OK);
     }
 
+    @PostMapping(value = "/status/{id}", params = {"status"})
+    @ResponseBody
+    public ResponseEntity<WheelRimPosition> updateWheelRimStatus(@PathVariable Long id, @RequestParam("status") String status) {
+        WheelRimPosition newWheelRimPosition = wheelRimPositionService.updateStatus(id, status);
+        return new ResponseEntity<>(newWheelRimPosition, HttpStatus.OK);
+    }
+
 }
