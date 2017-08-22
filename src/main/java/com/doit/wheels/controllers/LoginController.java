@@ -2,6 +2,7 @@ package com.doit.wheels.controllers;
 
 import com.doit.wheels.services.UserService;
 import com.doit.wheels.utils.enums.UserRoleEnum;
+import com.doit.wheels.dao.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,10 +26,10 @@ public class LoginController extends AbstractController{
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<UserRoleEnum> verifyLogin() {
+    public ResponseEntity<User> verifyLogin() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String login = authentication.getName();
-        UserRoleEnum role = userService.findUserByUsername(login).getRole();
-        return new ResponseEntity<>(role, HttpStatus.OK);
+        User user = userService.findUserByUsername(login);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }

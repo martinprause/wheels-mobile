@@ -3,6 +3,7 @@ package com.doit.wheels.services.impl;
 import com.doit.wheels.dao.entities.Order;
 import com.doit.wheels.services.OrderService;
 import com.doit.wheels.services.StorageService;
+import com.doit.wheels.utils.enums.StatusTypeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,6 +35,7 @@ public class FileSystemStorageService implements StorageService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        order.setStatus(StatusTypeEnum.DELIVERED);
         return orderService.update(order);
     }
 

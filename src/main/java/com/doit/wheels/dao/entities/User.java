@@ -15,6 +15,7 @@ public class User extends Contact {
 
     private String username;
 
+    @JsonIgnore
     private String password;
 
     @Enumerated(EnumType.STRING)
