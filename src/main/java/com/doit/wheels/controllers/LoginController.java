@@ -1,8 +1,7 @@
 package com.doit.wheels.controllers;
 
-import com.doit.wheels.services.UserService;
-import com.doit.wheels.utils.enums.UserRoleEnum;
 import com.doit.wheels.dao.entities.User;
+import com.doit.wheels.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
