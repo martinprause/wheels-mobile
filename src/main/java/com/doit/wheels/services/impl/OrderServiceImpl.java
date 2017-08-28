@@ -3,6 +3,7 @@ package com.doit.wheels.services.impl;
 import com.doit.wheels.dao.entities.Order;
 import com.doit.wheels.dao.entities.Signature;
 import com.doit.wheels.dao.entities.User;
+import com.doit.wheels.dao.entities.WheelRimPosition;
 import com.doit.wheels.dao.repositories.GenericRepository;
 import com.doit.wheels.dao.repositories.OrderRepository;
 import com.doit.wheels.services.OrderService;
@@ -15,8 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class OrderServiceImpl extends GenericServiceImpl<Order> implements OrderService {
@@ -97,5 +97,15 @@ public class OrderServiceImpl extends GenericServiceImpl<Order> implements Order
     @Override
     public List<Order> fetchOrdersFromPage(Integer pageNumber) {
         return orderRepository.findAll(new PageRequest(pageNumber, 10)).getContent();
+    }
+
+    @Override
+    public Order findById(Long id) {
+        Order order = super.findById(id);
+        if (order.getWheelRimPositions().size() != 0) {
+            Set<WheelRimPosition> sortedWheelRims = new TreeSet<>(order.getWheelRimPositions());
+            order.setWheelRimPositions(sortedWheelRims);
+        }
+        return order;
     }
 }

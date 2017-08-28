@@ -10,7 +10,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class WheelRimPosition extends AbstractModel {
+public class WheelRimPosition extends AbstractModel implements Comparable<WheelRimPosition>{
 
     private String positionNo;
 
@@ -166,5 +166,10 @@ public class WheelRimPosition extends AbstractModel {
 
     public void setQrCode(String qrCode) {
         this.qrCode = qrCode;
+    }
+
+    @Override
+    public int compareTo(WheelRimPosition o) {
+        return Integer.valueOf(this.getPositionNo()) - Integer.valueOf(o.getPositionNo());
     }
 }

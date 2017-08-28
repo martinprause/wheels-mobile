@@ -84,6 +84,7 @@ public class Order extends AbstractModel {
             joinColumns = {@JoinColumn(name = "order_id")},
             inverseJoinColumns = {@JoinColumn(name = "guideline_id")})
     @JsonIgnore
+    @JsonManagedReference
     private Set<Guideline> guidelines = new HashSet<>();
 
     @OneToMany(mappedBy = "order")
