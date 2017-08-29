@@ -1,5 +1,6 @@
 package com.doit.wheels.controllers;
 
+import com.doit.wheels.dao.entities.Order;
 import com.doit.wheels.dao.entities.WheelRimPosition;
 import com.doit.wheels.services.WheelRimPositionService;
 import com.doit.wheels.utils.exceptions.NoPermissionsException;
@@ -66,9 +67,9 @@ public class WheelRimPositionController extends AbstractController {
 
     @PostMapping(value = "/status/{id}", params = {"status"})
     @ResponseBody
-    public ResponseEntity<WheelRimPosition> updateWheelRimStatus(@PathVariable Long id, @RequestParam("status") String status) {
-        WheelRimPosition newWheelRimPosition = wheelRimPositionService.updateStatus(id, status);
-        return new ResponseEntity<>(newWheelRimPosition, HttpStatus.OK);
+    public ResponseEntity<Order> updateWheelRimStatus(@PathVariable Long id, @RequestParam("status") String status) {
+        Order order = wheelRimPositionService.updateStatus(id, status);
+        return new ResponseEntity<>(order, HttpStatus.OK);
     }
 
 }

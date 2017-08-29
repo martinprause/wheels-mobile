@@ -90,6 +90,11 @@ public class OrderServiceImpl extends GenericServiceImpl<Order> implements Order
     }
 
     @Override
+    public Order findOrderByWheelRimPositions(WheelRimPosition wheelRimPosition) {
+        return orderRepository.findOrderByWheelRimPositions(wheelRimPosition);
+    }
+
+    @Override
     public Order findOrderByOrderNo(String orderNo) {
         return orderRepository.findOrderByOrderNo(orderNo);
     }
@@ -108,4 +113,6 @@ public class OrderServiceImpl extends GenericServiceImpl<Order> implements Order
         }
         return order;
     }
+
+
 }

@@ -2,6 +2,7 @@ package com.doit.wheels.dao.entities;
 
 import com.doit.wheels.dao.entities.basic.AbstractModel;
 import com.doit.wheels.utils.enums.StatusTypeEnum;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.Entity;
@@ -27,6 +28,10 @@ public class WheelRimPosition extends AbstractModel implements Comparable<WheelR
     private ModelType modelType;
     private Integer size;
     private Boolean hubCover;
+
+    @ManyToOne
+    @JsonBackReference
+    private Order order;
 
     @ManyToOne
     @JsonManagedReference
@@ -166,6 +171,14 @@ public class WheelRimPosition extends AbstractModel implements Comparable<WheelR
 
     public void setQrCode(String qrCode) {
         this.qrCode = qrCode;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     @Override
