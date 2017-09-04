@@ -26,6 +26,7 @@ public class WheelRimPositionServiceImpl extends GenericServiceImpl<WheelRimPosi
     @Override
     public Order updateStatus(Long id, String status) {
         boolean allProcessed = true;
+        boolean inDelivery = false;
         WheelRimPosition wheelRimPosition = this.findById(id);
         wheelRimPosition.setStatus(StatusTypeEnum.valueOf(status));
         this.update(wheelRimPosition);
@@ -34,14 +35,22 @@ public class WheelRimPositionServiceImpl extends GenericServiceImpl<WheelRimPosi
             if (rimPosition.getStatus().equals(StatusTypeEnum.IN_PROCESS) || rimPosition.getStatus().equals(StatusTypeEnum.PROCESSED)){
                 order.setStatus(StatusTypeEnum.IN_PROCESS);
             }
-
             if (!rimPosition.getStatus().equals(StatusTypeEnum.PROCESSED)){
                 allProcessed = false;
+            }
+            if (rimPosition.getStatus().equals(StatusTypeEnum.IN_DELIVERY)){
+                inDelivery = true;
+                allProcessed = false;
+                break;
             }
         }
 
         if (allProcessed){
             order.setStatus(StatusTypeEnum.PROCESSED);
+        }
+
+        if (inDelivery){
+            order.setStatus(StatusTypeEnum.IN_DELIVERY);
         }
 
         Order updatedOrder = orderService.update(order);
