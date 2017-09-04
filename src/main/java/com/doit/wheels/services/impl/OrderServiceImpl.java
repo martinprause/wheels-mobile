@@ -13,6 +13,7 @@ import com.doit.wheels.utils.enums.StatusTypeEnum;
 import com.doit.wheels.utils.exceptions.NoPermissionsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -101,7 +102,7 @@ public class OrderServiceImpl extends GenericServiceImpl<Order> implements Order
 
     @Override
     public List<Order> fetchOrdersFromPage(Integer pageNumber) {
-        return orderRepository.findAll(new PageRequest(pageNumber, 10)).getContent();
+        return orderRepository.findAll(new PageRequest(pageNumber, 10, Sort.Direction.DESC, "orderNo")).getContent();
     }
 
     @Override
