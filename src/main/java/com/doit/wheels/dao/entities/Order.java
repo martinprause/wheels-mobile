@@ -74,7 +74,7 @@ public class Order extends AbstractModel {
 
     private String qrCode;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "orders_wheel_rim_positions",joinColumns = { @JoinColumn(name = "order_id") }, inverseJoinColumns = { @JoinColumn(name = "wheel_rim_position_id") })
     @JsonManagedReference
     private Set<WheelRimPosition> wheelRimPositions;
