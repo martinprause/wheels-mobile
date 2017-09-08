@@ -32,6 +32,9 @@ public class WheelRimPositionServiceImpl extends GenericServiceImpl<WheelRimPosi
         this.update(wheelRimPosition);
         Order order = orderService.findOrderByWheelRimPositions(wheelRimPosition);
         for (WheelRimPosition rimPosition : order.getWheelRimPositions()) {
+            if (rimPosition.getStatus() == null){
+                rimPosition.setStatus(StatusTypeEnum.CREATED);
+            }
             if (rimPosition.getStatus().equals(StatusTypeEnum.IN_PROCESS) || rimPosition.getStatus().equals(StatusTypeEnum.PROCESSED)){
                 order.setStatus(StatusTypeEnum.IN_PROCESS);
             }
