@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 
 @EnableWebSecurity
@@ -15,6 +16,7 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
         http.authorizeRequests().anyRequest().fullyAuthenticated().and().
                 httpBasic().and().
-                csrf().disable();
+                logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .and().csrf().disable();
     }
 }

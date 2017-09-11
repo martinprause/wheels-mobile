@@ -1,8 +1,7 @@
 package com.doit.wheels.controllers;
 
-import com.doit.wheels.services.UserService;
-import com.doit.wheels.utils.enums.UserRoleEnum;
 import com.doit.wheels.dao.entities.User;
+import com.doit.wheels.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,5 +30,15 @@ public class LoginController extends AbstractController{
         String login = authentication.getName();
         User user = userService.findUserByUsername(login);
         return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, params = "logout")
+    @ResponseBody
+    public ResponseEntity logout(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null){
+            SecurityContextHolder.clearContext();
+        }
+        return new ResponseEntity(HttpStatus.OK);
     }
 }
