@@ -1,6 +1,7 @@
 package com.doit.wheels.controllers;
 
 import com.doit.wheels.dao.entities.Order;
+import com.doit.wheels.dao.entities.PicturesDto;
 import com.doit.wheels.services.OrderService;
 import com.doit.wheels.utils.exceptions.NoPermissionsException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,5 +90,11 @@ public class OrderController extends AbstractController {
             throw new NoSuchElementException();
         }
         return new ResponseEntity<>(order, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/pictures/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<PicturesDto> getOrderPicturesById(@PathVariable String id){
+        return new ResponseEntity<>(orderService.getWheelsPicturesByOrderNo(id), HttpStatus.OK);
     }
 }

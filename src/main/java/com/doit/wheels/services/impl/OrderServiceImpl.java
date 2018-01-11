@@ -1,9 +1,6 @@
 package com.doit.wheels.services.impl;
 
-import com.doit.wheels.dao.entities.Order;
-import com.doit.wheels.dao.entities.Signature;
-import com.doit.wheels.dao.entities.User;
-import com.doit.wheels.dao.entities.WheelRimPosition;
+import com.doit.wheels.dao.entities.*;
 import com.doit.wheels.dao.repositories.GenericRepository;
 import com.doit.wheels.dao.repositories.OrderRepository;
 import com.doit.wheels.services.OrderService;
@@ -93,6 +90,17 @@ public class OrderServiceImpl extends GenericServiceImpl<Order> implements Order
     @Override
     public Order findOrderByWheelRimPositions(WheelRimPosition wheelRimPosition) {
         return orderRepository.findOrderByWheelRimPositions(wheelRimPosition);
+    }
+
+    @Override
+    public PicturesDto getWheelsPicturesByOrderNo(String orderNo) {
+        Order order = orderRepository.findOrderByOrderNo(orderNo);
+        PicturesDto picturesDto = new PicturesDto();
+        picturesDto.setWheelsRimPicture1(order.getWheelsRimPicture1());
+        picturesDto.setWheelsRimPicture2(order.getWheelsRimPicture2());
+        picturesDto.setWheelsRimPicture3(order.getWheelsRimPicture3());
+        picturesDto.setWheelsRimPicture4(order.getWheelsRimPicture4());
+        return picturesDto;
     }
 
     @Override

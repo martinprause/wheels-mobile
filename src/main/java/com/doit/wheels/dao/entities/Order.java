@@ -55,15 +55,19 @@ public class Order extends AbstractModel {
     private User driver;
 
     @Lob
+    @JsonIgnore
     private byte[] wheelsRimPicture1;
 
     @Lob
+    @JsonIgnore
     private byte[] wheelsRimPicture2;
 
     @Lob
+    @JsonIgnore
     private byte[] wheelsRimPicture3;
 
     @Lob
+    @JsonIgnore
     private byte[] wheelsRimPicture4;
 
     @Lob

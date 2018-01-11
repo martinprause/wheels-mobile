@@ -1,6 +1,7 @@
 package com.doit.wheels.services;
 
 import com.doit.wheels.dao.entities.Order;
+import com.doit.wheels.dao.entities.PicturesDto;
 import com.doit.wheels.dao.entities.Signature;
 import com.doit.wheels.dao.entities.WheelRimPosition;
 import com.doit.wheels.utils.enums.AccessLevelTypeEnum;
@@ -25,4 +26,6 @@ public interface OrderService  extends GenericService<Order> {
     Order uploadSignature(Long id, Signature signature);
 
     Order findOrderByWheelRimPositions(WheelRimPosition wheelRimPosition);
+
+    PicturesDto getWheelsPicturesByOrderNo(String orderNo);
 }
